@@ -1,0 +1,7 @@
+# Regexes (grep -E) of backticked tokens the path-existence check must skip.
+# One pattern per line; blank lines and lines starting with # are ignored.
+# Fetched sandbox sources and build output are not committed, so their paths are
+# not required to exist for a fresh clone.
+^sandbox/src
+^sandbox/build
+^sandbox/aur

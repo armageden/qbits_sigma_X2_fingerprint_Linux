@@ -1,0 +1,20 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# ADVISORY docs check. Warns about documentation drift but NEVER blocks a commit
+# and never alters existing hook behaviour: this script always exits 0.
+
+root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+check="$root/scripts/docs-check.sh"
+[ -f "$check" ] || exit 0
+
+if command -v bash >/dev/null 2>&1; then runner=bash; else runner=sh; fi
+
+if ! out=$(cd "$root" && "$runner" "$check" 2>&1); then
+  echo "---------------------------------------------------------------"
+  echo "docs-check (ADVISORY, non-blocking): documentation may be stale."
+  echo "$out" | sed 's/^/  /'
+  echo "Run 'make docs-check' and update docs/ before your final commit."
+  echo "See docs/00-how-to/06-sync-docs.md for the docs-sync runbook."
+  echo "---------------------------------------------------------------"
+fi
+exit 0

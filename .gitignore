@@ -1,0 +1,8 @@
+# Sandbox: fetched upstream sources and build artifacts are never committed.
+sandbox/src/
+sandbox/build/
+sandbox/aur/
+
+# Local runtime state / logs
+*.log
+sandbox/.cache/
